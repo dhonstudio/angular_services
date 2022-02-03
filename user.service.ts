@@ -19,8 +19,8 @@ export class UserService {
     return (await firstValueFrom(this.httpClient.get<any>(`${this.globalService.apiUrl}/${db}/${table}?${get}`, this.globalService.setHttpOptions({username:auth.username, password: auth.password})))).data;
   }
 
-  async checkPassword(db: string, table: string, auth: {username: string, password: string}, email: string, password: string): Promise<User[]> {
-    let get = `email=${email}&password=${password}`
+  async checkPassword(db: string, table: string, auth: {username: string, password: string}, email: string, password: string, password_field_name: string): Promise<User[]> {
+    let get = `email=${email}&${password_field_name}=${password}`
     return (await firstValueFrom(this.httpClient.get<any>(`${this.globalService.apiUrl}/${db}/${table}/password_verify?${get}`, this.globalService.setHttpOptions({username:auth.username, password: auth.password})))).data;
   }
 
