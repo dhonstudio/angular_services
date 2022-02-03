@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import { User } from 'src/app/models/user.model';
 import { GlobalService } from './global.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class UserService {
     private globalService: GlobalService,
   ) { }
 
-  async checkUser(db: string, table: string, auth: {username, password}, email: string): Promise<User[]> {
+  async checkUser(db: string, table: string, auth: {username: string, password: string}, email: string): Promise<User[]> {
     let get = `email=${email}`
     return (await firstValueFrom(this.httpClient.get<any>(`${this.globalService.apiUrl}/${db}/${table}?${get}`, this.globalService.setHttpOptions({username:auth.username, password: auth.password})))).data;
   }

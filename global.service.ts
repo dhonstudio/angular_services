@@ -24,7 +24,7 @@ export class GlobalService {
     return text;
   }
 
-  setHttpOptions(auth: {username, password}) {
+  setHttpOptions(auth: {username: string, password: string}) {
     return {headers: new HttpHeaders({
       'Content-Type':  'application/x-www-form-urlencoded',
       'Authorization': 'Basic ' + btoa(`${auth.username}:${auth.password}`)
