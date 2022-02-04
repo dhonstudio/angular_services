@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class GlobalService {
   */
   apiUrl = environment.API_URL;
 
-  constructor() { }
+  constructor(
+    private snackBar: MatSnackBar,
+  ) { }
 
   randomUniq(lenght: number) {
     var text = "";
@@ -29,5 +32,13 @@ export class GlobalService {
       'Content-Type':  'application/x-www-form-urlencoded',
       'Authorization': 'Basic ' + btoa(`${auth.username}:${auth.password}`)
     })}
+  }
+
+  showSnackBar(message: string, duration: number) {
+    this.snackBar.open(message, 'CLOSE', {
+      duration: duration
+    }).onAction().subscribe(() => {
+      this.snackBar.dismiss();
+    });
   }
 }
