@@ -41,4 +41,28 @@ export class GlobalService {
       this.snackBar.dismiss();
     });
   }
+
+  showSnackBarWithUndo(message: string, undoMessage: string, duration: number) {
+    let undo = false;
+
+    const snackBarRef = this.snackBar.open(message, 'UNDO', {
+      duration: duration
+    })
+    
+    snackBarRef.onAction().subscribe(() => {
+      undo = true;
+      this.snackBar.open(undoMessage, 'CLOSE', {
+        duration: duration
+      }).onAction()
+        .subscribe(() => {
+          this.snackBar.dismiss();
+        });
+    });
+
+    return new Promise((resolve, reject) => {
+      snackBarRef.afterDismissed().subscribe(result => {
+        resolve(undo);
+      }, reject);
+    }); 
+  }
 }
