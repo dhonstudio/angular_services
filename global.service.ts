@@ -34,6 +34,11 @@ export class GlobalService {
     })}
   }
 
+  filter(value: string, field: string[]) {
+    const filterValue = value.toLowerCase();
+    return field.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
   showSnackBar(message: string, duration: number) {
     this.snackBar.open(message, 'CLOSE', {
       duration: duration
